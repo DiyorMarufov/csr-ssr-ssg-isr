@@ -5,13 +5,11 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import type { Product } from "../page";
 
-export interface CsrDetailProps {
-  params: {
-    id: string;
-  };
+interface CsrDetailProps {
+  id: string;
 }
 
-const CsrDetail = ({ params: { id } }: CsrDetailProps) => {
+const CsrDetail = ({ id }: CsrDetailProps) => {
   const [product, setProduct] = useState<Product | null>(null);
   const router = useRouter();
 
