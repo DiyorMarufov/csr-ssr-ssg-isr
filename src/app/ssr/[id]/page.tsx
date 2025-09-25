@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Recipe } from "../page";
+import Link from "next/link";
 
 export interface SsrDetailProps {
   params: {
@@ -40,12 +41,12 @@ const SsrDetail = async ({ params: { id } }: SsrDetailProps) => {
 
   return (
     <div className="max-w-5xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-2xl">
-      <a
+      <Link
         href="/ssr"
         className="mb-6 inline-block px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition"
       >
         ← Back
-      </a>
+      </Link>
       <div className="flex flex-col md:flex-row gap-8">
         <Image
           src={recipe.image}

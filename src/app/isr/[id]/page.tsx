@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 interface Post {
@@ -48,12 +49,12 @@ const IsrDetail = async ({ params: { id } }: IsrDetailProps) => {
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-2xl">
-      <a
+      <Link
         href="/isr"
         className="mb-6 inline-block px-4 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition"
       >
         ← Back
-      </a>
+      </Link>
       <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
       <p className="text-lg text-gray-700">{post.body}</p>
       <p className="mt-4 text-sm text-gray-500">User ID: {post.userId}</p>
