@@ -1,13 +1,34 @@
+"use client";
 import Link from "next/link";
-import { memo, ReactNode } from "react";
+import { usePathname } from "next/navigation";
+import { memo } from "react";
 
 const Header = () => {
+  const pathName = usePathname();
+
+  const links = [
+    { href: "/csr", label: "CSR" },
+    { href: "/isr", label: "ISR" },
+    { href: "/ssg", label: "SSG" },
+    { href: "/ssr", label: "SSR" },
+  ];
+
   return (
     <div className="flex gap-10 h-[60px] justify-center items-center">
-      <Link href={"/csr"}>CSR</Link>
-      <Link href={"/isr"}>ISR</Link>
-      <Link href={"/ssg"}>SSG</Link>
-      <Link href={"/ssr"}>SSR</Link>
+      {links.map((link) => {
+        const isActive = pathName === link.href;
+        return (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={`${
+              isActive ? "text-blue-500 font-bold underline" : "text-gray-700"
+            }`}
+          >
+            {link.label}
+          </Link>
+        );
+      })}
     </div>
   );
 };

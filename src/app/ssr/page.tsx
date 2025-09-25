@@ -1,49 +1,38 @@
-"use client";
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 
-const Ssr = () => {
-  const [data, setData] = useState<any[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch("https://dummyjson.com/recipes", {
-        cache: "no-store",
-      });
-      const json = await res.json();
-      setData(json.recipes);
-    };
-    fetchData();
-  }, []);
-
+const Ssr = async () => {
+  const res = await fetch("https://dummyjson.com/recipes", {
+    cache: "no-store",
+  });
+  const json = await res.json();
+  const data = json?.recipes;
   return (
     <div className="container mx-auto px-4 py-8 grid grid-cols-4 gap-6 max-md:grid-cols-3 max-sm:grid-cols-2">
-      {data.map((product) => (
+      {data.map((recipe: any) => (
         <div
-          key={product.id}
+          key={recipe.id}
           className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white cursor-pointer"
         >
           <div className="h-48 w-full overflow-hidden">
             <img
-              src={product.image}
-              alt={product.name}
+              src={recipe.image}
+              alt={recipe.name}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             />
           </div>
 
           <div className="p-4 flex flex-col gap-2">
             <h1 className="text-lg font-semibold text-gray-800 line-clamp-1">
-              {product.name}
+              {recipe.name}
             </h1>
-            <p className="text-sm text-gray-500 capitalize">
-              {product.cuisine}
-            </p>
+            <p className="text-sm text-gray-500 capitalize">{recipe.cuisine}</p>
 
             <div className="flex justify-between items-center mt-2">
               <span className="text-green-600 font-bold text-lg">
-                {product.difficulty}
+                {recipe.difficulty}
               </span>
               <span className="text-yellow-500 font-medium">
-                ⭐ {product.rating}
+                ⭐ {recipe.rating}
               </span>
             </div>
 
