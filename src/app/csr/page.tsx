@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import Image from "next/image";
-import { memo, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { memo, MouseEvent, useEffect, useState } from "react";
 
-interface Product {
+export interface Product {
   id: number;
   title: string;
   category: string;
@@ -23,10 +24,20 @@ const Csr = () => {
     fetchData();
   }, []);
 
+  const router = useRouter();
+  const handleNavigate = (id: string) => {
+    router.push(`/csr/${id}`);
+  };
+
+  const handleAddCart = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 grid grid-cols-4 gap-6 max-md:grid-cols-3 max-sm:grid-cols-2">
       {data.map((product) => (
         <div
+          onClick={() => handleNavigate(String(product.id))}
           key={product.id}
           className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white cursor-pointer"
         >
@@ -57,7 +68,10 @@ const Csr = () => {
               </span>
             </div>
 
-            <button className="mt-3 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition cursor-pointer">
+            <button
+              onClick={handleAddCart}
+              className="mt-3 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition cursor-pointer"
+            >
               Add to Cart
             </button>
           </div>

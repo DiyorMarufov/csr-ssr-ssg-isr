@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { memo } from "react";
+import Link from "next/link";
 
 interface Post {
   id: number;
@@ -14,11 +14,13 @@ const Isr = async () => {
   });
   const json = await res.json();
   const data: Post[] = json?.posts;
+
   return (
     <div className="container mx-auto px-4 py-8 grid grid-cols-4 gap-6 max-md:grid-cols-3 max-sm:grid-cols-2">
       {data.map((user) => (
-        <div
+        <Link
           key={user.id}
+          href={`/isr/${user.id}`}
           className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white cursor-pointer"
         >
           <div className="h-48 w-full overflow-hidden">
@@ -38,15 +40,11 @@ const Isr = async () => {
             <p className="text-sm text-gray-500 capitalize line-clamp-4">
               {user.body}
             </p>
-
-            <button className="mt-3 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition cursor-pointer">
-              Add to Cart
-            </button>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
 };
 
-export default memo(Isr);
+export default Isr;

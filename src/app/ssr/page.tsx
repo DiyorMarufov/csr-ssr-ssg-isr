@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { memo } from "react";
+import Link from "next/link";
 
-interface Recipe {
+export interface Recipe {
   id: number;
   name: string;
   cuisine: string;
@@ -16,11 +16,13 @@ const Ssr = async () => {
   });
   const json = await res.json();
   const data: Recipe[] = json?.recipes;
+  
   return (
     <div className="container mx-auto px-4 py-8 grid grid-cols-4 gap-6 max-md:grid-cols-3 max-sm:grid-cols-2">
       {data.map((recipe) => (
-        <div
+        <Link
           key={recipe.id}
+          href={`/ssr/${recipe.id}`}
           className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white cursor-pointer"
         >
           <div className="h-48 w-full overflow-hidden">
@@ -47,15 +49,11 @@ const Ssr = async () => {
                 ⭐ {recipe.rating}
               </span>
             </div>
-
-            <button className="mt-3 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition cursor-pointer">
-              Add to Cart
-            </button>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
 };
 
-export default memo(Ssr);
+export default Ssr;
