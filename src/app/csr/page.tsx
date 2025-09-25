@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { memo, useEffect, useState } from "react";
 
 const Csr = () => {
@@ -21,8 +22,10 @@ const Csr = () => {
           className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white cursor-pointer"
         >
           <div className="h-48 w-full overflow-hidden">
-            <img
+            <Image
               src={product.thumbnail}
+              width={300}
+              height={200}
               alt={product.title}
               className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
             />

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { memo } from "react";
 
 const Ssr = async () => {
@@ -14,9 +15,11 @@ const Ssr = async () => {
           className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white cursor-pointer"
         >
           <div className="h-48 w-full overflow-hidden">
-            <img
+            <Image
               src={recipe.image}
               alt={recipe.name}
+              width={300}
+              height={200}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             />
           </div>
