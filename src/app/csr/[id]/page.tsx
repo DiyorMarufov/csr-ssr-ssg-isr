@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import type { Product } from "../page";
@@ -68,4 +68,4 @@ const CsrDetail = ({ id }: CsrDetailProps) => {
   );
 };
 
-export default memo(CsrDetail);
+export default CsrDetail;
