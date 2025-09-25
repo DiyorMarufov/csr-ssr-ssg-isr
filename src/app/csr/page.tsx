@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import { memo, useEffect, useState } from "react";
 
