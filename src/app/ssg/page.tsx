@@ -1,15 +1,24 @@
 import Image from "next/image";
 import { memo } from "react";
 
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  gender: string;
+  image: string;
+}
+
 const Ssg = async () => {
   const res = await fetch("https://dummyjson.com/users", {
     cache: "force-cache",
   });
   const json = await res.json();
-  const data = json?.users;
+  const data: User[] = json?.users;
   return (
     <div className="container mx-auto px-4 py-8 grid grid-cols-4 gap-6 max-md:grid-cols-3 max-sm:grid-cols-2">
-      {data.map((recipe: any) => (
+      {data.map((recipe) => (
         <div
           key={recipe.id}
           className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white cursor-pointer"
@@ -17,7 +26,7 @@ const Ssg = async () => {
           <div className="h-48 w-full overflow-hidden">
             <Image
               src={recipe.image}
-              alt={recipe.name}
+              alt={recipe.firstName}
               width={300}
               height={200}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"

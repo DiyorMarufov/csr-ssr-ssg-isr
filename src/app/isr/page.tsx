@@ -1,15 +1,22 @@
 import Image from "next/image";
 import { memo } from "react";
 
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
+}
+
 const Isr = async () => {
   const res = await fetch("https://dummyjson.com/posts", {
     next: { revalidate: 60 },
   });
   const json = await res.json();
-  const data = json?.posts;
+  const data: Post[] = json?.posts;
   return (
     <div className="container mx-auto px-4 py-8 grid grid-cols-4 gap-6 max-md:grid-cols-3 max-sm:grid-cols-2">
-      {data.map((user: any) => (
+      {data.map((user) => (
         <div
           key={user.id}
           className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white cursor-pointer"
@@ -17,7 +24,7 @@ const Isr = async () => {
           <div className="h-48 w-full overflow-hidden">
             <Image
               src={`https://picsum.photos/400/300?random=${user.id}`}
-              alt={user.name}
+              alt={user.title}
               width={300}
               height={200}
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"

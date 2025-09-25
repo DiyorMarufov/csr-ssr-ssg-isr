@@ -1,9 +1,17 @@
-"use client";
 import Image from "next/image";
 import { memo, useEffect, useState } from "react";
 
+interface Product {
+  id: number;
+  title: string;
+  category: string;
+  price: number;
+  rating: number;
+  thumbnail: string;
+}
+
 const Csr = () => {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {

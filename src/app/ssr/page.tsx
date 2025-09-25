@@ -1,15 +1,24 @@
 import Image from "next/image";
 import { memo } from "react";
 
+interface Recipe {
+  id: number;
+  name: string;
+  cuisine: string;
+  difficulty: string;
+  rating: number;
+  image: string;
+}
+
 const Ssr = async () => {
   const res = await fetch("https://dummyjson.com/recipes", {
     cache: "no-store",
   });
   const json = await res.json();
-  const data = json?.recipes;
+  const data: Recipe[] = json?.recipes;
   return (
     <div className="container mx-auto px-4 py-8 grid grid-cols-4 gap-6 max-md:grid-cols-3 max-sm:grid-cols-2">
-      {data.map((recipe: any) => (
+      {data.map((recipe) => (
         <div
           key={recipe.id}
           className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 bg-white cursor-pointer"
