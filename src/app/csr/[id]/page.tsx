@@ -1,20 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import type { Product } from "../page";
 
-interface CsrDetailProps {
-  params: { id: string };
-}
-
-export default function Page({ params }: CsrDetailProps) {
-  const { id } = params;
+export default function Page() {
+  const params = useParams();
+  const id = params?.id; 
   const [product, setProduct] = useState<Product | null>(null);
   const router = useRouter();
 
   useEffect(() => {
+    if (!id) return;
+
     const fetchData = async () => {
       const res = await fetch(`https://dummyjson.com/products/${id}`);
       const json = await res.json();
