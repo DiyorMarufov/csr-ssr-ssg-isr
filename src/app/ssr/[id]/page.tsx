@@ -4,13 +4,11 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Recipe } from "../page";
 
-interface PageProps {
-  params: { id: string };
-}
-
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   const res = await fetch(`https://dummyjson.com/recipes/${params.id}`, {
     cache: "no-store",
   });

@@ -11,14 +11,12 @@ interface User {
   image: string;
 }
 
-interface PageProps {
-  params: { id: string };
-}
-
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
-  const res = await fetch(`https://dummyjson.com/users/${params.id}`);
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const res = await fetch(`https://dummyjson.com/users/${ params.id}`);
   const data: User = await res.json();
 
   return {
