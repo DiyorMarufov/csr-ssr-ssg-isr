@@ -30,14 +30,14 @@ export async function generateStaticParams() {
   });
   const data = await res.json();
 
-  return data.posts.map((post: Post) => ({ id: String(post.id) }));
+  return data.posts.map((post: Post) => ({
+    id: String(post.id),
+  }));
 }
 
-export default async function Page({
-  params: { id },
-}: {
-  params: { id: string };
-}) {
+export default async function Page({ params }: { params: { id: string } }) {
+  const id = params.id;
+
   const res = await fetch(`https://dummyjson.com/posts/${id}`, {
     next: { revalidate: 60 },
   });
