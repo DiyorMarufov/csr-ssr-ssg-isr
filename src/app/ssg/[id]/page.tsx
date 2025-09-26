@@ -11,15 +11,13 @@ interface User {
   image: string;
 }
 
-interface SsgDetailProps {
-  params: {
-    id: string;
-  };
+interface PageProps {
+  params: { id: string };
 }
 
 export async function generateMetadata({
   params,
-}: SsgDetailProps): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const res = await fetch(`https://dummyjson.com/users/${params.id}`);
   const data: User = await res.json();
 
@@ -41,11 +39,10 @@ export async function generateStaticParams() {
   }));
 }
 
-const SsgDetail = async ({ params: { id } }: SsgDetailProps) => {
+export default async function Page({ params: { id } }: PageProps) {
   const res = await fetch(`https://dummyjson.com/users/${id}`, {
     cache: "force-cache",
   });
-
   const user: User = await res.json();
 
   return (
@@ -76,6 +73,4 @@ const SsgDetail = async ({ params: { id } }: SsgDetailProps) => {
       </div>
     </div>
   );
-};
-
-export default SsgDetail;
+}

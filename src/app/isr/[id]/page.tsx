@@ -9,18 +9,17 @@ interface Post {
   userId: number;
 }
 
-interface IsrDetailProps {
+interface PageProps {
   params: { id: string };
 }
 
 export async function generateMetadata({
   params,
-}: IsrDetailProps): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const res = await fetch(`https://dummyjson.com/posts/${params.id}`);
   if (!res.ok) return { title: "Post not found" };
 
   const post: Post = await res.json();
-
   return {
     title: post.title,
     description: post.body.slice(0, 100),
@@ -38,7 +37,7 @@ export async function generateStaticParams() {
   }));
 }
 
-const IsrDetail = async ({ params: { id } }: IsrDetailProps) => {
+export default async function Page({ params: { id } }: PageProps) {
   const res = await fetch(`https://dummyjson.com/posts/${id}`, {
     next: { revalidate: 60 },
   });
@@ -60,6 +59,4 @@ const IsrDetail = async ({ params: { id } }: IsrDetailProps) => {
       <p className="mt-4 text-sm text-gray-500">User ID: {post.userId}</p>
     </div>
   );
-};
-
-export default IsrDetail;
+}

@@ -1,40 +1,33 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Recipe } from "../page";
 import Link from "next/link";
+import { Recipe } from "../page";
 
-export interface SsrDetailProps {
-  params: {
-    id: string;
-  };
+interface PageProps {
+  params: { id: string };
 }
 
 export async function generateMetadata({
   params,
-}: SsrDetailProps): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const res = await fetch(`https://dummyjson.com/recipes/${params.id}`, {
     cache: "no-store",
   });
-
   if (!res.ok) return { title: "Recipe not found" };
 
   const recipe: Recipe = await res.json();
-
   return {
     title: recipe.name,
     description: `Cuisine: ${recipe.cuisine} | Difficulty: ${recipe.difficulty}`,
-    openGraph: {
-      images: [recipe.image],
-    },
+    openGraph: { images: [recipe.image] },
   };
 }
 
-const SsrDetail = async ({ params: { id } }: SsrDetailProps) => {
+export default async function Page({ params: { id } }: PageProps) {
   const res = await fetch(`https://dummyjson.com/recipes/${id}`, {
     cache: "no-store",
   });
-
   if (!res.ok) return notFound();
 
   const recipe: Recipe = await res.json();
@@ -66,6 +59,4 @@ const SsrDetail = async ({ params: { id } }: SsrDetailProps) => {
       </div>
     </div>
   );
-};
-
-export default SsrDetail;
+}
