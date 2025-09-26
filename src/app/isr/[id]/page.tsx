@@ -9,13 +9,11 @@ interface Post {
   userId: number;
 }
 
-interface PageProps {
-  params: { id: string };
-}
-
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   const res = await fetch(`https://dummyjson.com/posts/${params.id}`);
   if (!res.ok) return { title: "Post not found" };
 
@@ -32,16 +30,17 @@ export async function generateStaticParams() {
   });
   const data = await res.json();
 
-  return data.posts.map((post: Post) => ({
-    id: String(post.id),
-  }));
+  return data.posts.map((post: Post) => ({ id: String(post.id) }));
 }
 
-export default async function Page({ params: { id } }: PageProps) {
+export default async function Page({
+  params: { id },
+}: {
+  params: { id: string };
+}) {
   const res = await fetch(`https://dummyjson.com/posts/${id}`, {
     next: { revalidate: 60 },
   });
-
   if (!res.ok) return notFound();
 
   const post: Post = await res.json();
