@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { memo } from "react";
 
 interface User {
   id: number;
@@ -13,7 +12,7 @@ interface User {
 
 const Ssg = async () => {
   const res = await fetch("https://dummyjson.com/users", {
-    cache: "force-cache", 
+    cache: "force-cache",
   });
   const json = await res.json();
   const data: User[] = json?.users;
@@ -54,4 +53,4 @@ const Ssg = async () => {
   );
 };
 
-export default memo(Ssg);
+export default Ssg;
