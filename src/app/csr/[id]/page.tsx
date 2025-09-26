@@ -9,7 +9,7 @@ interface CsrDetailProps {
   id: string;
 }
 
-const CsrDetail = ({ id }: CsrDetailProps) => {
+export const CsrDetail = ({ id }: CsrDetailProps) => {
   const [product, setProduct] = useState<Product | null>(null);
   const router = useRouter();
 
@@ -68,4 +68,3 @@ const CsrDetail = ({ id }: CsrDetailProps) => {
   );
 };
 
-export default CsrDetail;
