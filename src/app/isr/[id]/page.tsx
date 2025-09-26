@@ -14,11 +14,16 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const res = await fetch(`https://dummyjson.com/posts/${params.id}`);
+  const { id } = await params;
+
+  const res = await fetch(`https://dummyjson.com/posts/${id}`);
   if (!res.ok) return { title: "Post not found" };
 
   const post: Post = await res.json();
-  return { title: post.title, description: post.body.slice(0, 100) };
+  return {
+    title: post.title,
+    description: post.body.slice(0, 100),
+  };
 }
 
 export async function generateStaticParams() {
@@ -29,8 +34,8 @@ export async function generateStaticParams() {
   return data.posts.map((post: Post) => ({ id: String(post.id) }));
 }
 
-export default async function Page({ params }: any) {
-  const { id } = params;
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = await params;
 
   const res = await fetch(`https://dummyjson.com/posts/${id}`, {
     next: { revalidate: 60 },
