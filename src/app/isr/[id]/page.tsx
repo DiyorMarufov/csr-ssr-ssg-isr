@@ -18,10 +18,7 @@ export async function generateMetadata({
   if (!res.ok) return { title: "Post not found" };
 
   const post: Post = await res.json();
-  return {
-    title: post.title,
-    description: post.body.slice(0, 100),
-  };
+  return { title: post.title, description: post.body.slice(0, 100) };
 }
 
 export async function generateStaticParams() {
@@ -29,14 +26,11 @@ export async function generateStaticParams() {
     next: { revalidate: 60 },
   });
   const data = await res.json();
-
-  return data.posts.map((post: Post) => ({
-    id: String(post.id),
-  }));
+  return data.posts.map((post: Post) => ({ id: String(post.id) }));
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
+  const { id } = params;
 
   const res = await fetch(`https://dummyjson.com/posts/${id}`, {
     next: { revalidate: 60 },
