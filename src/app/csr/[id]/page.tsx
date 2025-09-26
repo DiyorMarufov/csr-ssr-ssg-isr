@@ -6,10 +6,11 @@ import Image from "next/image";
 import type { Product } from "../page";
 
 interface CsrDetailProps {
-  id: string;
+  params: { id: string };
 }
 
-export const CsrDetail = ({ id }: CsrDetailProps) => {
+export default function Page({ params }: CsrDetailProps) {
+  const { id } = params;
   const [product, setProduct] = useState<Product | null>(null);
   const router = useRouter();
 
@@ -66,5 +67,4 @@ export const CsrDetail = ({ id }: CsrDetailProps) => {
       </div>
     </div>
   );
-};
-
+}
