@@ -24,7 +24,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params: { id } }: PageProps) {
+export default async function Page({ params }: { params: { id: string } }) {
+  const { id } = await params;
   const res = await fetch(`https://dummyjson.com/recipes/${id}`, {
     cache: "no-store",
   });
